@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ExamenNomina.Models.Empleado>
+
+@{
+    ViewBag.Title = "Buscador";
+}
+
+<h2>Buscador de Nominas del Empleados</h2>
+
+@using (Html.BeginForm("Buscador","Empleado", FormMethod.Get))
+{
+    <p>
+        Buscar por nombre: @Html.TextBox("nombre")
+        <input type="submit" value="Buscar"/>
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomEmpleado)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomEmpleado)
+            </td>
+
+            <td>
+                @Html.ActionLink("Ver Nomina", "NominasPorEmpleado", "Nomina", new { id = item.IdEmpleado },new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>

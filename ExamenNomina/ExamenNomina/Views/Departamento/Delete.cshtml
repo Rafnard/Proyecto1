@@ -1,0 +1,32 @@
+﻿@model ExamenNomina.Models.Departamento
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h3>¿Desea eliminar este departamento?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomDepartamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomDepartamento)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> 
+            @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

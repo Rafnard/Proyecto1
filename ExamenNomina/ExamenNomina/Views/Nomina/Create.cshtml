@@ -1,0 +1,103 @@
+﻿ @model ExamenNomina.Models.Nomina
+
+@{
+    ViewBag.Title = "Crear Nomina";
+}
+
+<h2>Crear Nomina</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdEmpleado, "IdEmpleado", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("IdEmpleado", null, htmlAttributes: new { @class = "form-control", id = "empleadoID"})
+            @Html.ValidationMessageFor(model => model.IdEmpleado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Dias, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Dias, new { htmlAttributes = new { @class = "form-control ", id = "Dias", onkeyup = "mul()" , onclick = "mul()" } })
+            @Html.ValidationMessageFor(model => model.Dias, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Empleado.Sueldo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Empleado.Sueldo, new { htmlAttributes = new { @class = "form-control ", ReadOnly = "true", id = "SueldoDia", onkeyup = "mul()", onclick = "mul()" } })
+            @Html.ValidationMessageFor(model => model.Empleado.Sueldo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SueldoQuincenal, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SueldoQuincenal, new { htmlAttributes = new { @class = "form-control", ReadOnly = "true", id = "Quincena" } })
+            @Html.ValidationMessageFor(model => model.SueldoQuincenal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Crear" class="btn btn-success " />
+            @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function mul() {
+            var sueldodia = document.getElementById('SueldoDia').value;
+
+            var dia = document.getElementById('Dias').value;
+            var mult = sueldodia * dia;
+            document.getElementById('Quincena').value = mult;
+
+            
+        }
+
+        $('#empleadoID').change(function () {
+            var url = "/Nomina/BuscarSueldo?Id_Emplea=" + $('#empleadoID option:selected').val();
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                success: function (result) {
+                    var sueldo;
+                    if (result != null && result.length > 0) {
+                        sueldo = JSON.parse(result);
+                    }
+                    if (sueldo != null) {
+                        $('#SueldoDia').val(sueldo);//cargo debe ser la propiedad de la clase lider donde se almacena el cargo del lider 
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("error al consultar datos del sueldo");
+                }
+            });
+        });
+    </script>
+}

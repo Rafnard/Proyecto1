@@ -1,0 +1,51 @@
+﻿@model ExamenNomina.Models.Nomina
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+    
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dias)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SueldoQuincenal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SueldoQuincenal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empleado.NomEmpleado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empleado.NomEmpleado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdNomina },new { @class = "btn btn-success" })
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+</p>

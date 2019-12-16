@@ -1,0 +1,26 @@
+﻿@model ExamenNomina.Models.Departamento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Departamento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomDepartamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomDepartamento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdDepartamento },new { @class = "btn btn-success" })
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+</p>

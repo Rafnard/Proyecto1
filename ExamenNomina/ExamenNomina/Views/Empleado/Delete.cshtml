@@ -1,0 +1,55 @@
+﻿@model ExamenNomina.Models.Empleado
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h3>¿Desea eliminar este departamento?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomEmpleado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sueldo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sueldo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Departamento.NomDepartamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departamento.NomDepartamento)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Eliminar" class="btn btn-danger" />
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+</div>
+    }
+</div>

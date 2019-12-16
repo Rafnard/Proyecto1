@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ExamenNomina.Models.Departamento>
+@using System.Security.Claims
+@using System.Threading
+@{
+
+    var Rol = "";
+    var autenticado = false;
+
+    ClaimsPrincipal principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+    if (principal != null && principal.Identity.IsAuthenticated)
+    {
+        var Claims = principal.Claims.ToList();
+
+        Rol = Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+
+    }
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Departamentos</h2>
+@if (Rol.Equals("A"))
+{
+    <p>
+        @Html.ActionLink("Crear Nuevo", "Create", "", new { @class = "btn btn-success" })
+    </p>
+}
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomDepartamento)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomDepartamento)
+                </td>
+                <td>
+                    @if (Rol.Equals("A"))
+                    {
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdDepartamento }, new { @class = "btn btn-primary" })
+                    }
+                    @Html.ActionLink("Detalles", "Details", new { id = item.IdDepartamento }, new { @class = "btn btn-success" })
+                    @if (Rol.Equals("A"))
+                    {
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdDepartamento }, new { @class = "btn btn-danger" })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ExamenNomina.Models.Nomina>
+@using System.Security.Claims
+@using System.Threading
+@{
+
+    var Rol = "";
+    var autenticado = false;
+
+    ClaimsPrincipal principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+    if (principal != null && principal.Identity.IsAuthenticated)
+    {
+        var Claims = principal.Claims.ToList();
+
+        Rol = Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+
+    }
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Nomina</h2>
+
+<div class="row">
+    @if (Rol.Equals("A"))
+    {
+        <div class="col-md-6">
+            <p>
+                @Html.ActionLink("Crear Nuevo", "Create", "", new { @class = "btn btn-success" })
+            </p>
+        </div>
+    }
+        <div class="col-md-6">
+            @using (Html.BeginForm("Index", "Nomina", FormMethod.Get))
+            {
+                <p>
+                    Buscar por Fecha:  @Html.DropDownList("Fecha", null, htmlAttributes: new { @class = "form-control" })
+                    <input type="submit" value="Buscar" />
+                </p>
+            }
+        </div>
+    </div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Empleado.NomEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SueldoQuincenal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empleado.NomEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SueldoQuincenal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @if (Rol.Equals("A"))
+                {
+                    @Html.ActionLink("Editar", "Edit", new { id = item.IdNomina }, new { @class = "btn btn-primary" })
+                }
+                @Html.ActionLink("Detailles", "NominasPorEmpleado", new { id = item.IdEmpleado }, new { @class = "btn btn-success" })
+                @if (Rol.Equals("A"))
+                {
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdNomina }, new { @class = "btn btn-danger" })
+                }
+                </td>
+        </tr>
+
+    }
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+
+    </tr>
+    <tr>
+        <td class="text-info"><strong>Total de la nomina: </strong></td>
+        <td class="text-info"><strong>@ViewBag.Total</strong></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>

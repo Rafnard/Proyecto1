@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ExamenNomina.Models.Nomina>
+
+@{
+    ViewBag.Title = "Nominas Por Empleado";
+}
+
+<h2>NominasPorEmpleado</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Empleado.NomEmpleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SueldoQuincenal)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empleado.NomEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SueldoQuincenal)
+            </td>
+        </tr>
+    }
+
+
+</table>
+
+<p>
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+</p>
